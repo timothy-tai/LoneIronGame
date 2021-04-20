@@ -13,7 +13,7 @@ class Menu extends Phaser.Scene {
         this.load.image('bg7', 'assets/bg7.png');
         this.load.image('private', 'assets/private.png');
         this.load.image('sergeant', 'assets/sergeant.png');
-        this.load.audio('sfx_select', './assets/blip_select12.wav');
+        this.load.audio('sfx_start', './assets/startshot.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
         this.load.audio('bgm', './assets/bgm.wav');
@@ -45,11 +45,12 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
         this.add.text(game.config.width/2, game.config.height/4.9-borderUISize - borderPadding, 'LONE WOLF', menuConfig).setOrigin(0.5);
+        menuConfig.fontSize = '13px';
+        this.add.text(game.config.width/2, game.config.height/4-borderUISize - borderPadding, 'by Timothy Tai', menuConfig).setOrigin(0.5);
         menuConfig.fontSize = '20px';
-        this.add.text(game.config.width/2, game.config.height/4, 'Controls: Use <--> arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3.8, 'Controls: Use <--> arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/4, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Private', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/1.3, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Sergeant', menuConfig).setOrigin(0.5);
-        //menuConfig.backgroundColor = '#00FF00';
         this.add.text(game.config.width/4, game.config.height/1.8 + borderUISize + borderPadding, 'Press [<-]', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/1.3, game.config.height/1.8 + borderUISize + borderPadding, 'Press [->]', menuConfig).setOrigin(0.5);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -67,7 +68,8 @@ class Menu extends Phaser.Scene {
             spaceshipSpeed: 3,
             gameTimer: 60000    
           }
-          this.sound.play('sfx_select');
+          this.music.pause();
+          this.sound.play('sfx_start');
           this.scene.start('playScene');    
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -76,7 +78,8 @@ class Menu extends Phaser.Scene {
             spaceshipSpeed: 4,
             gameTimer: 45000    
           }
-          this.sound.play('sfx_select');
+          this.music.pause();
+          this.sound.play('sfx_start');
           this.scene.start('playScene');    
         }
       }
