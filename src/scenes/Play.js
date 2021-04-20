@@ -73,10 +73,10 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        this.bg1.tilePositionX -= 1.1;
-        this.bg2.tilePositionX -= 0.2;
-        this.bg3.tilePositionX -= 0.4;
-        this.bg4.tilePositionX -=0.05;
+        this.bg1.tilePositionX -= 0.5;
+        this.bg2.tilePositionX -= 0.08;
+        this.bg3.tilePositionX -= 0.1;
+        this.bg4.tilePositionX -=0.02;
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
         }

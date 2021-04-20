@@ -44,7 +44,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.add.text(game.config.width/2, game.config.height/4.9-borderUISize - borderPadding, 'LONE WOLF', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/4.9-borderUISize - borderPadding, 'LONE IRON', menuConfig).setOrigin(0.5);
         menuConfig.fontSize = '13px';
         this.add.text(game.config.width/2, game.config.height/4-borderUISize - borderPadding, 'by Timothy Tai', menuConfig).setOrigin(0.5);
         menuConfig.fontSize = '20px';
@@ -69,7 +69,7 @@ class Menu extends Phaser.Scene {
             gameTimer: 60000    
           }
           this.music.pause();
-          this.sound.play('sfx_start');
+          this.sound.play('sfx_start', {volume: 0.5});
           this.scene.start('playScene');    
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -79,7 +79,7 @@ class Menu extends Phaser.Scene {
             gameTimer: 45000    
           }
           this.music.pause();
-          this.sound.play('sfx_start');
+          this.sound.play('sfx_start', {volume: 0.5});
           this.scene.start('playScene');    
         }
       }
