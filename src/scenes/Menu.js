@@ -11,6 +11,8 @@ class Menu extends Phaser.Scene {
         this.load.image('bg4', 'assets/bg4.png');
         this.load.image('bg5', 'assets/bg5.png');
         this.load.image('bg7', 'assets/bg7.png');
+        this.load.image('private', 'assets/private.png');
+        this.load.image('sergeant', 'assets/sergeant.png');
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
@@ -23,9 +25,11 @@ class Menu extends Phaser.Scene {
         this.bg3 = this.add.tileSprite(0, 0, 640, 189, 'bg3').setOrigin(0, -1.6);
         this.bg2 = this.add.tileSprite(0, 0, 640, 132, 'bg2').setOrigin(0, -0.5);
         this.bg1 = this.add.tileSprite(0, 0, 640, 72, 'bg1').setOrigin(0, -5.7);
+        this.private = this.add.tileSprite(0, 0, 71, 70, 'private').setOrigin(-1.7, -3);
+        this.sergeant = this.add.tileSprite(0, 0, 64, 84, 'sergeant').setOrigin(-7.2, -2.42);
         let menuConfig = {
             fontFamily: 'CustomFont',
-            fontSize: '20px',
+            fontSize: '30px',
             //backgroundColor: '#F3B141',
             color: '#FFFFFF',
             align: 'right',
@@ -35,11 +39,14 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.add.text(game.config.width/2, game.config.height/3-borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use <--> arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
-        
+        this.add.text(game.config.width/2, game.config.height/4.9-borderUISize - borderPadding, 'LONE WOLF', menuConfig).setOrigin(0.5);
+        menuConfig.fontSize = '20px';
+        this.add.text(game.config.width/2, game.config.height/4, 'Controls: Use <--> arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/4, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Private', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/1.3, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Sergeant', menuConfig).setOrigin(0.5);
         //menuConfig.backgroundColor = '#00FF00';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press <- for Novice or -> for Expert', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/4, game.config.height/1.8 + borderUISize + borderPadding, 'Press [<-]', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/1.3, game.config.height/1.8 + borderUISize + borderPadding, 'Press [->]', menuConfig).setOrigin(0.5);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
