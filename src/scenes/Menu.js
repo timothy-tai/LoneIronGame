@@ -16,9 +16,14 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
+        this.load.audio('bgm', './assets/bgm.wav');
     }
 
     create() {
+        this.music = this.sound.add('bgm', {
+          loop:true
+        });
+        this.music.play();
         this.bg7 = this.add.tileSprite(0, 0, 640, 480, 'bg7').setOrigin(0, 0);
         this.bg5 = this.add.tileSprite(0, 0, 640, 480, 'bg5').setOrigin(0, 0);
         this.bg4 = this.add.tileSprite(0, 0, 640, 275, 'bg4').setOrigin(0, -0.9);
