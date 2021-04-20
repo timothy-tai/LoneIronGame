@@ -5,14 +5,24 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        this.load.image('starfield', 'assets/starfield.png');
+        this.load.image('bg1', 'assets/bg1.png');
+        this.load.image('bg2', 'assets/bg2.png');
+        this.load.image('bg3', 'assets/bg3.png');
+        this.load.image('bg4', 'assets/bg4.png');
+        this.load.image('bg5', 'assets/bg5.png');
+        this.load.image('bg7', 'assets/bg7.png');
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
     }
 
     create() {
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+        this.bg7 = this.add.tileSprite(0, 0, 640, 480, 'bg7').setOrigin(0, 0);
+        this.bg5 = this.add.tileSprite(0, 0, 640, 480, 'bg5').setOrigin(0, 0);
+        this.bg4 = this.add.tileSprite(0, 0, 640, 275, 'bg4').setOrigin(0, -0.9);
+        this.bg3 = this.add.tileSprite(0, 0, 640, 189, 'bg3').setOrigin(0, -1.6);
+        this.bg2 = this.add.tileSprite(0, 0, 640, 132, 'bg2').setOrigin(0, -0.5);
+        this.bg1 = this.add.tileSprite(0, 0, 640, 72, 'bg1').setOrigin(0, -5.7);
         let menuConfig = {
             fontFamily: 'CustomFont',
             fontSize: '20px',
@@ -35,7 +45,10 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-        this.starfield.tilePositionX -= 4;
+        this.bg1.tilePositionX -= 1.1;
+        this.bg2.tilePositionX -= 0.2;
+        this.bg3.tilePositionX -= 0.4;
+        this.bg4.tilePositionX -=0.05;
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
           // easy mode
           game.settings = {
