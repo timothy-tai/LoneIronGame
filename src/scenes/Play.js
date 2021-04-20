@@ -4,14 +4,24 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('starfield', 'assets/starfield.png');
+        this.load.image('bg1', 'assets/bg1.png');
+        this.load.image('bg2', 'assets/bg2.png');
+        this.load.image('bg3', 'assets/bg3.png');
+        this.load.image('bg4', 'assets/bg4.png');
+        this.load.image('bg5', 'assets/bg5.png');
+        this.load.image('bg7', 'assets/bg7.png');
         this.load.image('rocket', 'assets/rocket.png');
         this.load.image('spaceship', 'assets/spaceship.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
     create() {
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+        this.bg7 = this.add.tileSprite(0, 0, 640, 480, 'bg7').setOrigin(0, 0);
+        this.bg5 = this.add.tileSprite(0, 0, 640, 480, 'bg5').setOrigin(0, 0);
+        this.bg4 = this.add.tileSprite(0, 0, 640, 275, 'bg4').setOrigin(0, -0.9);
+        this.bg3 = this.add.tileSprite(0, 0, 640, 189, 'bg3').setOrigin(0, -1.6);
+        this.bg2 = this.add.tileSprite(0, 0, 640, 132, 'bg2').setOrigin(0, -0.5);
+        this.bg1 = this.add.tileSprite(0, 0, 640, 72, 'bg1').setOrigin(0, -5.7);
 
         this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize - borderPadding, 'rocket');
         this.add.existing(this.p1Rocket);
@@ -63,13 +73,16 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        this.bg1.tilePositionX -= 1.1;
+        this.bg2.tilePositionX -= 0.2;
+        this.bg3.tilePositionX -= 0.4;
+        this.bg4.tilePositionX -=0.05;
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
         }
-        this.starfield.tilePositionX -= 4;
         
         if (!this.gameOver) {               
             this.p1Rocket.update();         // update rocket sprite
