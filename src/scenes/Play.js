@@ -63,7 +63,7 @@ class Play extends Phaser.Scene {
         this.p1Score = 0;
         let scoreConfig = {
             fontFamily: 'CustomFont',
-            fontSize: '28px',
+            fontSize: '26px',
             //backgroundColor: '#F3B141',
             color: '#843605',
             align: 'right',
@@ -74,9 +74,10 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         scoreConfig.fontFamily = 'Courier';
-        this.scoreLeft = this.add.text(borderUISize - borderPadding*4, borderUISize/3 + borderPadding*2, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(borderUISize - borderPadding*1.1, borderUISize/3 + borderPadding*2, this.p1Score, scoreConfig);
+        scoreConfig.fontSize = '25px';
         scoreConfig.fontFamily = 'CustomFont';
-        this.kia = this.add.text(borderUISize + borderPadding, borderUISize/3.5 + borderPadding*2, "KIA", scoreConfig);
+        this.kia = this.add.text(borderUISize - borderPadding*4, borderUISize/2.9 + borderPadding*2, "KIA:", scoreConfig);
         
         this.gameOver = false;
         scoreConfig.fixedWidth = 0;
@@ -89,23 +90,46 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/3 + 64, 'Press [R] to Restart or [<-] for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
-
-        this.loadText = this.add.text(borderUISize + borderPadding, borderUISize/3.5 + borderPadding*2, "[E] to Reload", scoreConfig);
-        this.loadText2 = this.add.text(borderUISize + borderPadding, borderUISize/3.5 + borderPadding*2, "Reloading...", scoreConfig);
+        scoreConfig.fontSize = '18px';
+        this.loadText = this.add.text(borderUISize*15 + borderPadding, borderUISize + borderPadding*6, "[R] to Reload", scoreConfig);
+        this.loadText2 = this.add.text(borderUISize*15 + borderPadding, borderUISize + borderPadding*6, "Reloading...", scoreConfig);
         this.loadText.alpha = 0;
         this.loadText2.alpha = 0;
         this.check2 = 0;
         this.whentoready = 0;
+        scoreConfig.fontSize = '22px';
+        this.add.text(borderUISize*5.5 - borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Blood Loss: ", scoreConfig);
+        scoreConfig.fontFamily = 'Courier';
+        scoreConfig.fontSize = '26px';
+        this.timedisplay= 0;
+        this.timecount = this.add.text(borderUISize*9.5 + borderPadding, borderUISize/3 + borderPadding*2, this.timedisplay, scoreConfig);
+        scoreConfig.fontFamily = 'CustomFont';
+        scoreConfig.fontSize = '22px';
+        this.add.text(borderUISize*11.5 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Air[T]:", scoreConfig);
+        this.add.text(borderUISize*15 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Burst[R]:", scoreConfig);
+        this.add.text(borderUISize*15 + borderPadding*1.45, borderUISize + borderPadding*2.9, "Single[F]:", scoreConfig);
+        scoreConfig.fontFamily = 'Courier';
+        scoreConfig.fontSize = '26px';
+        this.single = 6;
+        this.singlesleft = this.add.text(borderUISize*18.4 + borderPadding*1.5, borderUISize + borderPadding*2.9, this.single, scoreConfig);
+        this.airstrikes = 1;
+        this.strikesleft = this.add.text(borderUISize*13.8 + borderPadding*1.5, borderUISize/3 + borderPadding*2, this.airstrikes, scoreConfig);
+        this.bursts = 3;
+        this.burstsleft = this.add.text(borderUISize*18.4 + borderPadding*1.5, borderUISize/3 + borderPadding*2, this.bursts, scoreConfig);
     }
     update() {
+        this.timedisplay = (Math.round(this.clock.getElapsed()/600));
+        this.timecount.text = this.timedisplay;
         var check = this.p1Rocket.firetest();
         if(this.check2 == 6) {
             this.p1Rocket.mutetrue();
             this.loadText.alpha = 1;
         }
-        if(Phaser.Input.Keyboard.JustDown(keyE)) {
+        if(Phaser.Input.Keyboard.JustDown(keyR)) {
             this.whentoready = this.clock.getElapsed() + 3500;
             this.sound.play('reload');
+            this.single = 6;
+            this.singlesleft.text = this.single;
             this.loadText.alpha = 0;
             this.loadText2.alpha = 1;
             this.check2 = 0;
@@ -120,6 +144,8 @@ class Play extends Phaser.Scene {
             for(var i = 0; i < 30; i++) {
                 if(this.bullets[i].fired == false) {
                     this.check2 += 1;
+                    this.single -= 1;
+                    this.singlesleft.text = this.single;
                     //this.p1Rocket.mutefalse();
                     this.bullets[i].fire(check[0], check[1]);
                     i = 30; 
