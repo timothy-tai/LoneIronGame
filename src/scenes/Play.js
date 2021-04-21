@@ -54,6 +54,8 @@ class Play extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
         this.anims.create({
             key: 'explode',
@@ -88,7 +90,7 @@ class Play extends Phaser.Scene {
             scoreConfig.fontFamily = 'CustomFont';
             this.add.text(game.config.width/2, game.config.height/4, 'GAME OVER', scoreConfig).setOrigin(0.5);
             scoreConfig.fontSize = '20px';
-            this.add.text(game.config.width/2, game.config.height/3 + 64, 'Press [R] to Restart or [<-] for Menu', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/3 + 64, 'Press [up] to Restart or [down] for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
         scoreConfig.fontSize = '18px';
@@ -173,7 +175,7 @@ class Play extends Phaser.Scene {
         this.bg2.tilePositionX -= 0.08;
         this.bg3.tilePositionX -= 0.1;
         this.bg4.tilePositionX -=0.02;
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             this.musicOver.pause();
             this.scene.restart();
         }
