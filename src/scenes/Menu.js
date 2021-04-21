@@ -14,9 +14,11 @@ class Menu extends Phaser.Scene {
         this.load.image('private', 'assets/private.png');
         this.load.image('sergeant', 'assets/sergeant.png');
         this.load.audio('sfx_start', './assets/startshot.wav');
-        this.load.audio('sfx_explosion', './assets/explosion38.wav');
+        this.load.audio('sfx_explosion', './assets/enemyKIA.wav');
         this.load.audio('sfx_shot', './assets/shot.wav');
         this.load.audio('bgm', './assets/bgm.wav');
+        this.load.audio('bgm2', './assets/bgm2.wav');
+        this.load.audio('bgm3', './assets/bgm3.wav');
     }
 
     create() {
@@ -48,7 +50,7 @@ class Menu extends Phaser.Scene {
         menuConfig.fontSize = '13px';
         this.add.text(game.config.width/2, game.config.height/4-borderUISize - borderPadding, 'by Timothy Tai', menuConfig).setOrigin(0.5);
         menuConfig.fontSize = '20px';
-        this.add.text(game.config.width/2, game.config.height/3.8, 'Controls: Use <--> arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3.8, 'Use [<-] [->] arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/4, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Private', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/1.3, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Sergeant', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/4, game.config.height/1.8 + borderUISize + borderPadding, 'Press [<-]', menuConfig).setOrigin(0.5);
@@ -66,7 +68,7 @@ class Menu extends Phaser.Scene {
           // easy mode
           game.settings = {
             spaceshipSpeed: 3,
-            gameTimer: 60000    
+            gameTimer: 60000  
           }
           this.music.pause();
           this.sound.play('sfx_start', {volume: 0.5});
