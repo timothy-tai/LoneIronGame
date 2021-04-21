@@ -158,6 +158,19 @@ class Play extends Phaser.Scene {
             }
             this.sound.play('burst');
         }
+        if(Phaser.Input.Keyboard.JustDown(keyW) && this.airstrikes != 0) {
+            this.airstrikes -= 1;
+            this.strikesleft.text = this.airstrikes;
+            var fifteen = 0;
+            for(var i = 0; i < 30; i++) {
+                this.bullets[i].fireair();
+                fifteen++;
+                if(fifteen == 20) {
+                    i = 30;
+                }
+            }
+            this.sound.play('airstrike');
+        }
         if (check != false && this.check2 !=6) {
             for(var i = 0; i < 30; i++) {
                 if(this.bullets[i].fired == false) {
