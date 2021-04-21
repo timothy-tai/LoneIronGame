@@ -51,6 +51,7 @@ class Play extends Phaser.Scene {
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
@@ -105,8 +106,8 @@ class Play extends Phaser.Scene {
         this.timecount = this.add.text(borderUISize*9.5 + borderPadding, borderUISize/3 + borderPadding*2, this.timedisplay, scoreConfig);
         scoreConfig.fontFamily = 'CustomFont';
         scoreConfig.fontSize = '22px';
-        this.add.text(borderUISize*11.5 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Air[T]:", scoreConfig);
-        this.add.text(borderUISize*15 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Burst[R]:", scoreConfig);
+        this.add.text(borderUISize*11.5 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Air[W]:", scoreConfig);
+        this.add.text(borderUISize*15 + borderPadding*1.5, borderUISize/3 + borderPadding*2.1, "Burst[E]:", scoreConfig);
         this.add.text(borderUISize*15 + borderPadding*1.45, borderUISize + borderPadding*2.9, "Single[F]:", scoreConfig);
         scoreConfig.fontFamily = 'Courier';
         scoreConfig.fontSize = '26px';
@@ -139,6 +140,21 @@ class Play extends Phaser.Scene {
         }
         if(this.whentoready < this.clock.getElapsed() && this.check2 !=6) {
             this.p1Rocket.mutefalse();
+        }
+        // Burst
+        var coords = this.p1Rocket.getCoords();
+        if(Phaser.Input.Keyboard.JustDown(keyE) && this.bursts != 0) {
+            this.bursts -= 1;
+            this.burstsleft.text = this.bursts;
+            var threebullets = 0;
+            for(var i = 0; i < 30; i++) {
+                this.bullets[i].fireburst(coords[0], coords[1]);
+                threebullets++;
+                if(threebullets == 3) {
+                    i = 30;
+                }
+            }
+            this.sound.play('burst');
         }
         if (check != false && this.check2 !=6) {
             for(var i = 0; i < 30; i++) {

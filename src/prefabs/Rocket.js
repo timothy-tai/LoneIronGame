@@ -32,7 +32,9 @@ class Rocket extends Phaser.GameObjects.Sprite {
             return(false);
         } 
     }
-
+    getCoords() {
+        return([this.x+game.config.width/70, this.y]);
+    }
     mutetrue() {
         this.mute = true;
     }
