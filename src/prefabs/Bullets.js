@@ -20,11 +20,11 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.movementSpeedX += (Phaser.Math.Between(-5,5) * 0.05);
     }
     fireair() {
-        this.x = 1;
-        this.y = 1;
+        this.x = 40;
+        this.y = 0.01;
         this.air = true;
         this.movementSpeed += Phaser.Math.Between(0,5);
-        this.movementSpeedX += Phaser.Math.Between(3,10);
+        this.movementSpeedX += Phaser.Math.Between(5,12);
     }
 
     update() {

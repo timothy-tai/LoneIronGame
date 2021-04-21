@@ -188,11 +188,11 @@ class Play extends Phaser.Scene {
         this.bg2.tilePositionX -= 0.08;
         this.bg3.tilePositionX -= 0.1;
         this.bg4.tilePositionX -=0.02;
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.musicOver.pause();
             this.scene.restart();
         }
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.musicOver.pause();
             this.scene.start("menuScene");
         }
