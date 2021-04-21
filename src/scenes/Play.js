@@ -1,7 +1,6 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
-        //this.bulletGroup;
     }
 
     preload() {
@@ -19,7 +18,12 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.BulletGroup = new BulletGroup(this, game.config.width / 2, game.config.height - borderUISize*1.7 - borderPadding, 'bullet');
+        //this.BulletGroup = new BulletGroup(this,'bullet');
+        //this.add.existing(this.BulletGroup);
+        var bullets = [];
+        for(var i = 0; i < 30; i++) {
+            bullets[i] = new Bullet(this, 'bullet')
+        }
         this.music = this.sound.add('bgm2', {
             loop:true
         });
@@ -34,7 +38,7 @@ class Play extends Phaser.Scene {
         this.bg2 = this.add.tileSprite(0, 0, 640, 132, 'bg2').setOrigin(0, -0.5);
         this.bg1 = this.add.tileSprite(0, 0, 640, 72, 'bg1').setOrigin(0, -5.7);
 
-        this.p1Rocket = new Rocket(this, this.BulletGroup, game.config.width / 2, game.config.height - borderUISize*1.7 - borderPadding, 'gun');
+        this.p1Rocket = new Rocket(this, this.bullets, game.config.width / 2, game.config.height - borderUISize*1.7 - borderPadding, 'gun');
         this.add.existing(this.p1Rocket);
         
         this.ship1 = new Ship(this, game.config.width + borderUISize*6, borderUISize*4, 'apache', 0, 1).setOrigin(0,0);
@@ -106,36 +110,41 @@ class Play extends Phaser.Scene {
         
         if (!this.gameOver) {               
             this.p1Rocket.update();         // update rocket sprite
-            this.ship1.update();           // update spaceships (x3)
+            for (var i = 0;i<30; i++) {
+                this.bullets[i].update();
+            }
+            this.ship1.update();           // update spaceships (x4)
             this.ship2.update();
             this.ship3.update();
             this.ship4.update();
         } 
-
-        if(this.checkCollision(this.p1Rocket, this.ship3)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship3);
-        }
-        if (this.checkCollision(this.p1Rocket, this.ship2)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship2);
-        }
-        if (this.checkCollision(this.p1Rocket, this.ship1)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship1);
-        }
-        if(this.checkCollision(this.p1Rocket, this.ship4)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship4);
+        //for bullet in bullet group reset that on bullet
+        for (var i = 0;i < 30; i++) {
+            if(this.checkCollision(this.bullets[i], this.ship3)) {
+                this.bullets[i].reset();
+                this.shipExplode(this.ship3);
+            }
+            if (this.checkCollision(this.bullets[i], this.ship2)) {
+                this.bullets[i].reset();
+                this.shipExplode(this.ship2);
+            }
+            if (this.checkCollision(this.bullets[i], this.ship1)) {
+                this.bullets[i].reset();
+                this.shipExplode(this.ship1);
+            }
+            if(this.checkCollision(this.bullets[i], this.ship4)) {
+                this.bullets[i].reset();
+                this.shipExplode(this.ship4);
+            }
         }
     }
 
-    checkCollision(rocket, ship) {
+    checkCollision(bullet, ship) {
         // simple AABB checking
-        if (rocket.x < ship.x + ship.width && 
-            rocket.x + rocket.width > ship.x && 
-            rocket.y < ship.y + ship.height &&
-            rocket.height + rocket.y > ship. y) {
+        if (bullet.x < ship.x + ship.width && 
+            bullet.x + rocket.width > ship.x && 
+            bullet.y < ship.y + ship.height &&
+            bullet.height + rocket.y > ship. y) {
                 return true;
         } else {
             return false;
