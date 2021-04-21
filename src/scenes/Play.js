@@ -20,10 +20,7 @@ class Play extends Phaser.Scene {
     create() {
         //this.BulletGroup = new BulletGroup(this,'bullet');
         //this.add.existing(this.BulletGroup);
-        var bullets = [];
-        for(var i = 0; i < 30; i++) {
-            bullets[i] = new Bullet(this, 'bullet')
-        }
+
         this.music = this.sound.add('bgm2', {
             loop:true
         });
@@ -38,19 +35,21 @@ class Play extends Phaser.Scene {
         this.bg2 = this.add.tileSprite(0, 0, 640, 132, 'bg2').setOrigin(0, -0.5);
         this.bg1 = this.add.tileSprite(0, 0, 640, 72, 'bg1').setOrigin(0, -5.7);
 
-        this.p1Rocket = new Rocket(this, this.bullets, game.config.width / 2, game.config.height - borderUISize*1.7 - borderPadding, 'gun');
+        this.p1Rocket = new Rocket(this, game.config.width / 2, game.config.height - borderUISize*1.7 - borderPadding, 'gun');
         this.add.existing(this.p1Rocket);
+
+        this.bullets = [];
+        for(var i = 0; i < 30; i++) {
+            this.bullets.push(new Bullet(this,game.config.width / 2, game.config.height/2, 'bullet'));
+        }
+        for(var i = 0; i < 30; i++) {
+            this.add.existing(this.bullets[i]);
+        }
         
         this.ship1 = new Ship(this, game.config.width + borderUISize*6, borderUISize*4, 'apache', 0, 1).setOrigin(0,0);
         this.ship2 = new Ship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'apache', 0, 1).setOrigin(0,0);
         this.ship3 = new Ship(this, game.config.width, borderUISize*6 + borderPadding*4, 'apache', 0, 1).setOrigin(0,0);
         this.ship4 = new Ship(this, game.config.width, borderUISize*2 + borderPadding*1, 'chinook', 0, 3).setOrigin(0,0);
-        //this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
-        //this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        //this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        //this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-        //this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -95,6 +94,16 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        var check = this.p1Rocket.firetest();
+        if (check != false) {
+            for(var i = 0; i < 30; i++) {
+                if(this.bullets[i].fired == false) {
+                    this.bullets[i].fire(check[0], check[1]);
+                    i = 30; 
+                }
+            }
+        }
+        
         this.bg1.tilePositionX -= 0.5;
         this.bg2.tilePositionX -= 0.08;
         this.bg3.tilePositionX -= 0.1;
@@ -142,9 +151,9 @@ class Play extends Phaser.Scene {
     checkCollision(bullet, ship) {
         // simple AABB checking
         if (bullet.x < ship.x + ship.width && 
-            bullet.x + rocket.width > ship.x && 
+            bullet.x + bullet.width > ship.x && 
             bullet.y < ship.y + ship.height &&
-            bullet.height + rocket.y > ship. y) {
+            bullet.height + bullet.y > ship. y) {
                 return true;
         } else {
             return false;

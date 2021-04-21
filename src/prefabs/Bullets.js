@@ -1,6 +1,6 @@
 class Bullet extends Phaser.GameObjects.Sprite {
-    constructor(scene, texture, frame) {
-        super(scene, texture, frame);
+    constructor(scene,x,y, texture, frame) {
+        super(scene, x,y,texture, frame);
         this.movementSpeed = 5;
         this.fired = false;
     }
@@ -8,16 +8,19 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.x = x;
         this.y = y;
         this.fired = true;
-        this.y -= this.movementSpeed;
     }
 
     update() {
+        if (this.fired == true) {
+            this.y -= this.movementSpeed;
+        }
         if(this.y <=0) {
-            this.fired = false;
-            this.y = game.config.height-borderUISize*1.7-borderPadding;
+            this.reset();
+            console.log('check');
         }
     }
     reset() {
+        this.fired= false;
         this.y = game.config.height-borderUISize*1.7-borderPadding;
     }
 }

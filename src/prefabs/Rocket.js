@@ -4,9 +4,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.movementSpeed = 2;
         //this.isFiring = false;
         this.sfxshot = scene.sound.add('sfx_shot', {volume: 0.5});
-    }
-    preload() {
-        
+        this.isFiring = false;
     }
 
     update() {
@@ -28,12 +26,24 @@ class Rocket extends Phaser.GameObjects.Sprite {
             //this.isFiring = true;
             this.sfxshot.play();
             //for the first non true bullet, fire that bullet
-            this.bullet.fire(this.x, this.y);
+            
+            //this.bullet.fire(this.x, this.y);
+            this.isFiring = true;
             //    this.isFiring = false;
         }
         this.x = Phaser.Math.Clamp(this.x, borderUISize + borderPadding, game.config.width-borderUISize-borderPadding);
         //}
     }
+
+    firetest() {
+        if (this.isFiring == true) {
+            this.isFiring = false;
+            return([this.x, this.y]);
+        } else {
+            return(false);
+        } 
+    }
+    
 
     reset() {
         this.y = game.config.height-borderUISize*1.7-borderPadding;
