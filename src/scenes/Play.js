@@ -18,9 +18,6 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        //this.BulletGroup = new BulletGroup(this,'bullet');
-        //this.add.existing(this.BulletGroup);
-
         this.music = this.sound.add('bgm2', {
             loop:true
         });
@@ -40,7 +37,7 @@ class Play extends Phaser.Scene {
 
         this.bullets = [];
         for(var i = 0; i < 30; i++) {
-            this.bullets.push(new Bullet(this,game.config.width / 2, game.config.height/2, 'bullet'));
+            this.bullets.push(new Bullet(this,game.config.width / 1.2, game.config.height - borderUISize*2.5, 'bullet'));
         }
         for(var i = 0; i < 30; i++) {
             this.add.existing(this.bullets[i]);
@@ -165,10 +162,10 @@ class Play extends Phaser.Scene {
         ship.alpha = 0;
         // create explosion sprite at ship's position
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        ship.reset();
+        ship.alpha = 1;
         boom.anims.play('explode');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after anim completes
-          ship.reset();                         // reset ship position
-          ship.alpha = 1;                       // make ship visible again
           boom.destroy();                       // remove explosion sprite
         });
         

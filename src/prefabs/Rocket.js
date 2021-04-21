@@ -1,7 +1,7 @@
 class Rocket extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
-        this.movementSpeed = 2;
+        this.movementSpeed = 1.5;
         //this.isFiring = false;
         this.sfxshot = scene.sound.add('sfx_shot', {volume: 0.5});
         this.isFiring = false;
@@ -38,7 +38,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
     firetest() {
         if (this.isFiring == true) {
             this.isFiring = false;
-            return([this.x, this.y]);
+            return([this.x+game.config.width/70, this.y]);
         } else {
             return(false);
         } 

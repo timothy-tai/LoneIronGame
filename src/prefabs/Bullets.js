@@ -16,12 +16,11 @@ class Bullet extends Phaser.GameObjects.Sprite {
         }
         if(this.y <=0) {
             this.reset();
-            console.log('check');
         }
     }
     reset() {
         this.fired= false;
-        this.y = game.config.height-borderUISize*1.7-borderPadding;
+        this.y = game.config.height-borderUISize*1.1-borderPadding;
     }
 }
 
