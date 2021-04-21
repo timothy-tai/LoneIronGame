@@ -23,23 +23,3 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.y = game.config.height-borderUISize*1.1-borderPadding;
     }
 }
-
-/*
-class BulletGroup extends Phaser.GameObjects.Group {
-    constructor(scene) {
-        super(scene);
-        this.createMultiple({
-            classType: Bullet,
-            frameQuantity: 30,
-            active: false,
-            visible: false,
-            key: 'bullet',
-        })
-    }
-
-    fireBullet(x,y) {
-        const bullet = this.getFirstDead();
-        bullet.fire(x,y);
-    }
-}
-*/

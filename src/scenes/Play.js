@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('gun', 'assets/gun.png');
         this.load.image('apache', 'assets/apache.png');
         this.load.image('chinook', 'assets/chinook.png');
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 11});
     }
 
     create() {
@@ -49,13 +49,14 @@ class Play extends Phaser.Scene {
         this.ship4 = new Ship(this, game.config.width, borderUISize*2 + borderPadding*1, 'chinook', 0, 3).setOrigin(0,0);
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         this.anims.create({
             key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 11, first: 0}),
             frameRate: 30
         });
 
@@ -88,13 +89,38 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/3 + 64, 'Press [R] to Restart or [<-] for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
-    }
 
+        this.loadText = this.add.text(borderUISize + borderPadding, borderUISize/3.5 + borderPadding*2, "[E] to Reload", scoreConfig);
+        this.loadText2 = this.add.text(borderUISize + borderPadding, borderUISize/3.5 + borderPadding*2, "Reloading...", scoreConfig);
+        this.loadText.alpha = 0;
+        this.loadText2.alpha = 0;
+        this.check2 = 0;
+        this.whentoready = 0;
+    }
     update() {
         var check = this.p1Rocket.firetest();
-        if (check != false) {
+        if(this.check2 == 6) {
+            this.p1Rocket.mutetrue();
+            this.loadText.alpha = 1;
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyE)) {
+            this.whentoready = this.clock.getElapsed() + 3500;
+            this.sound.play('reload');
+            this.loadText.alpha = 0;
+            this.loadText2.alpha = 1;
+            this.check2 = 0;
+        }
+        if(this.whentoready < this.clock.getElapsed()) {
+            this.loadText2.alpha = 0;
+        }
+        if(this.whentoready < this.clock.getElapsed() && this.check2 !=6) {
+            this.p1Rocket.mutefalse();
+        }
+        if (check != false && this.check2 !=6) {
             for(var i = 0; i < 30; i++) {
                 if(this.bullets[i].fired == false) {
+                    this.check2 += 1;
+                    //this.p1Rocket.mutefalse();
                     this.bullets[i].fire(check[0], check[1]);
                     i = 30; 
                 }

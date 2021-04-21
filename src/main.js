@@ -1,4 +1,4 @@
-//Timothy Tai | Project Title: Lone Iron | Work Time: 16 Hours
+//Timothy Tai | Title: Lone Iron | Work Time: 16 Hours
 //Background Music created using FL Studio
 //Background parallax and assets created using Photoshop
 //Redesigned artwork, UI, and sound to change theme/aesthetic(60)
@@ -16,4 +16,4 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
-let keyF, keyR, keyLEFT, keyRIGHT;
+let keyF, keyR, keyLEFT, keyRIGHT, keyE;

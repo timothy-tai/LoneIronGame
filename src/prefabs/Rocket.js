@@ -4,35 +4,24 @@ class Rocket extends Phaser.GameObjects.Sprite {
         this.movementSpeed = 1.5;
         //this.isFiring = false;
         this.sfxshot = scene.sound.add('sfx_shot', {volume: 0.5});
+        //this.sfxload = scene.sound.add('gunload');
         this.isFiring = false;
+        //this.isLoaded = true;
+        this.mute = false;
     }
 
     update() {
-        //if(this.isFiring) {
-            //this.shootBullet();
-            //this.y -= this.movementSpeed;
-            //if(this.y < 0.1) {
-            //    this.y = game.config.height-borderUISize*1.7-borderPadding;
-            //    this.isFiring = false;
-            //}
-        //} else {
         if(keyLEFT.isDown) {
             this.x -= this.movementSpeed;
         }
         if(keyRIGHT.isDown) {
             this.x += this.movementSpeed;
         }
-        if(Phaser.Input.Keyboard.JustDown(keyF)) {
-            //this.isFiring = true;
+        if(Phaser.Input.Keyboard.JustDown(keyF) && this.mute == false) {
             this.sfxshot.play();
-            //for the first non true bullet, fire that bullet
-            
-            //this.bullet.fire(this.x, this.y);
             this.isFiring = true;
-            //    this.isFiring = false;
         }
         this.x = Phaser.Math.Clamp(this.x, borderUISize + borderPadding, game.config.width-borderUISize-borderPadding);
-        //}
     }
 
     firetest() {
@@ -43,7 +32,13 @@ class Rocket extends Phaser.GameObjects.Sprite {
             return(false);
         } 
     }
-    
+
+    mutetrue() {
+        this.mute = true;
+    }
+    mutefalse() {
+        this.mute = false;
+    }
 
     reset() {
         this.y = game.config.height-borderUISize*1.7-borderPadding;

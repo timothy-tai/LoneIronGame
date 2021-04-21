@@ -19,6 +19,8 @@ class Menu extends Phaser.Scene {
         this.load.audio('bgm', './assets/bgm.wav');
         this.load.audio('bgm2', './assets/bgm2.wav');
         this.load.audio('bgm3', './assets/bgm3.wav');
+        this.load.audio('gunswitch', './assets/gunload.mp3');
+        this.load.audio('reload', './assets/fullreload.mp3');
     }
 
     create() {
