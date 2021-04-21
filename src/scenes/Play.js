@@ -128,7 +128,7 @@ class Play extends Phaser.Scene {
             this.p1Rocket.mutetrue();
             this.loadText.alpha = 1;
         }
-        if(Phaser.Input.Keyboard.JustDown(keyR)) {
+        if(Phaser.Input.Keyboard.JustDown(keyR) && this.single == 0) {
             this.whentoready = this.clock.getElapsed() + 3500;
             this.sound.play('reload');
             this.single = 6;
