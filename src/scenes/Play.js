@@ -246,7 +246,7 @@ class Play extends Phaser.Scene {
             }
             if(this.checkCollision(this.bullets[i], this.ship5)) {
                 this.bullets[i].reset();
-                this.flyby = false;
+                this.flyby = true;
                 this.shipExplode(this.ship5);
             }
         }
