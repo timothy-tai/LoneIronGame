@@ -22,6 +22,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('bgm2', './assets/bgm2.wav');
         this.load.audio('bgm3', './assets/bgm3.wav');
         this.load.audio('reload', './assets/fullreload.mp3');
+        this.load.audio('sfx_jet', './assets/jet.wav');
     }
 
     create() {
@@ -53,7 +54,7 @@ class Menu extends Phaser.Scene {
         menuConfig.fontSize = '13px';
         this.add.text(game.config.width/2, game.config.height/4-borderUISize - borderPadding, 'by Timothy Tai', menuConfig).setOrigin(0.5);
         menuConfig.fontSize = '20px';
-        this.add.text(game.config.width/2, game.config.height/3.8, 'Use [<-] [->] arrows to move and (F) to fire', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/3.8, 'Use [<-] [->] arrows to move [F] to fire [R] to reload', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/4, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Private', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/1.3, game.config.height/3.5 + borderUISize + borderPadding, 'Difficulty: Sergeant', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/4, game.config.height/1.8 + borderUISize + borderPadding, 'Press [<-]', menuConfig).setOrigin(0.5);

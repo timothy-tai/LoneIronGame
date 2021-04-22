@@ -23,7 +23,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.x = 40;
         this.y = 0.01;
         this.air = true;
-        this.movementSpeed += Phaser.Math.Between(0,5);
+        this.movementSpeed += Phaser.Math.Between(3,8);
         this.movementSpeedX += Phaser.Math.Between(5,12);
     }
 
@@ -31,7 +31,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         if (this.fired == true) {
             this.y -= this.movementSpeed;
         }
-        if(this.y <=0 || this.y>480) {
+        if(this.y <=0 || this.y>480 || this.x > 640) {
             this.reset();
         }
         if(this.burst == true) {

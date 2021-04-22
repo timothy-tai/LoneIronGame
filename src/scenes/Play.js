@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
         this.load.image('gun', 'assets/gun.png');
         this.load.image('apache', 'assets/apache.png');
         this.load.image('chinook', 'assets/chinook.png');
+        this.load.image('jet', 'assets/jet.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 11});
     }
 
@@ -47,6 +48,7 @@ class Play extends Phaser.Scene {
         this.ship2 = new Ship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'apache', 0, 1).setOrigin(0,0);
         this.ship3 = new Ship(this, game.config.width, borderUISize*6 + borderPadding*4, 'apache', 0, 1).setOrigin(0,0);
         this.ship4 = new Ship(this, game.config.width, borderUISize*2 + borderPadding*1, 'chinook', 0, 3).setOrigin(0,0);
+        this.ship5 = new Ship(this, game.config.width, borderUISize + borderPadding*1, 'jet', 0, 5, true).setOrigin(0,0);
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
@@ -119,6 +121,8 @@ class Play extends Phaser.Scene {
         this.strikesleft = this.add.text(borderUISize*13.8 + borderPadding*1.5, borderUISize/3 + borderPadding*2, this.airstrikes, scoreConfig);
         this.bursts = 3;
         this.burstsleft = this.add.text(borderUISize*18.4 + borderPadding*1.5, borderUISize/3 + borderPadding*2, this.bursts, scoreConfig);
+        this.flyby = false;
+        this.secondpass = false;
     }
     update() {
         this.timedisplay = (Math.round(this.clock.getElapsed()/600));
@@ -196,7 +200,19 @@ class Play extends Phaser.Scene {
             this.musicOver.pause();
             this.scene.start("menuScene");
         }
-        
+        if(this.clock.getElapsed() > 40000 && this.secondpass == false) {
+            this.flyby = false;
+            this.ship5.refire();
+            this.secondpass = true;
+        }
+        if(this.clock.getElapsed() > 40000 && this.flyby == false && this.secondpass == true) {
+            this.flyby = true;
+            this.sound.play('sfx_jet');
+        }
+        if (this.clock.getElapsed() > 20000 && this.clock.getElapsed() < 40000 && this.flyby == false) {
+            this.flyby = true;
+            this.sound.play('sfx_jet');
+        }
         if (!this.gameOver) {               
             this.p1Rocket.update();         // update rocket sprite
             for (var i = 0;i<30; i++) {
@@ -206,6 +222,9 @@ class Play extends Phaser.Scene {
             this.ship2.update();
             this.ship3.update();
             this.ship4.update();
+            if (this.flyby == true && this.ship5.jetstatus() == false) {
+                this.ship5.update();
+            }
         } 
         //for bullet in bullet group reset that on bullet
         for (var i = 0;i < 30; i++) {
@@ -224,6 +243,11 @@ class Play extends Phaser.Scene {
             if(this.checkCollision(this.bullets[i], this.ship4)) {
                 this.bullets[i].reset();
                 this.shipExplode(this.ship4);
+            }
+            if(this.checkCollision(this.bullets[i], this.ship5)) {
+                this.bullets[i].reset();
+                this.flyby = false;
+                this.shipExplode(this.ship5);
             }
         }
     }
